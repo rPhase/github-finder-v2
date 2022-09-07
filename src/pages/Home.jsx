@@ -1,10 +1,13 @@
 import React from 'react';
+import UserList from '../components/users/UserList';
+import UserSearch from '../components/users/UserSearch';
 
 const Home = () => {
   return (
-    <div>
-      <h1 className='text-6xl'>Welcome</h1>
-    </div>
+    <>
+      <UserSearch />
+      <UserList />
+    </>
   );
 };
 
