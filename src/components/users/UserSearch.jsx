@@ -1,9 +1,11 @@
 import React, { useContext, useState } from 'react';
+import AlertContext from '../../context/alert/AlertContext';
 import GithubContext from '../../context/github/GithubContext';
 
 const UserSearch = () => {
   const [text, setText] = useState('');
   const { users, searchUsers, clearUsers } = useContext(GithubContext);
+  const { setAlert } = useContext(AlertContext);
 
   const onChangeHandler = (e) => {
     setText(e.target.value);
@@ -12,7 +14,7 @@ const UserSearch = () => {
   const onSubmitHandler = (e) => {
     e.preventDefault();
     if (text.trim() === '') {
-      alert('Placeholder: Please enter something');
+      setAlert('Please enter something', 'error');
       return;
     }
 
