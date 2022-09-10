@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "autoprefixer": "^10.4.8",
+    "axios": "^0.27.2",
     "daisyui": "^2.25.0",
     "postcss": "^8.4.16",
     "prop-types": "^15.8.1",
