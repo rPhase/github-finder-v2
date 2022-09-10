@@ -1,37 +1,28 @@
-import { FaCodepen, FaStore, FaUserFriends, FaUsers } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import Spinner from '../components/layout/Spinner';
 import React, { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import GithubContext from '../context/github/GithubContext';
 import RepoList from '../components/repos/RepoList';
+import { getUserAndRepos } from '../context/github/GithubActions';
+import StatsGithub from '../components/stats/StatsGithub';
+import StatsProfile from '../components/stats/StatsProfile';
 
 const User = () => {
-  const { getUser, user, loading, getUserRepos, repos } =
-    useContext(GithubContext);
+  const { dispatch, user, loading, repos } = useContext(GithubContext);
+
   const params = useParams();
 
   useEffect(() => {
-    getUser(params.login);
-    getUserRepos(params.login);
-  }, []);
+    dispatch({ type: 'SET_LOADING' });
+    const getUserData = async () => {
+      const userData = await getUserAndRepos(params.login);
+      dispatch({ type: 'GET_USER_AND_REPOS', payload: userData });
+    };
+    getUserData();
+  }, [dispatch, params.login]);
 
-  const {
-    name,
-    type,
-    avatar_url,
-    location,
-    bio,
-    blog,
-    twitter_username,
-    login,
-    html_url,
-    followers,
-    following,
-    public_repos,
-    public_gists,
-    hireable,
-  } = user;
+  const { name, type, avatar_url, bio, login, html_url, hireable } = user;
 
   if (loading) {
     return <Spinner />;
@@ -54,10 +45,6 @@ const User = () => {
               <figure>
                 <img src={avatar_url} alt={login} />
               </figure>
-              <div className='card-body justify-end'>
-                <h2 className='card-title mb-0'>{name}</h2>
-                <p className='flex-grow-0'>{login}</p>
-              </div>
             </div>
           </div>
 
@@ -71,6 +58,8 @@ const User = () => {
                   <div className='mx-1 badge badge-info'>Hireable</div>
                 )}
               </h1>
+              <p>{login}</p>
+              <br />
               <p>{bio}</p>
               <div className='mt-4 card-actions'>
                 <a
@@ -83,97 +72,11 @@ const User = () => {
                 </a>
               </div>
             </div>
-
-            {/*Stats */}
-            <div className='w-full rounded-lg shadow-md bg-base-100 stats'>
-              <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3'>
-                {location && (
-                  <div className='stat'>
-                    <div className='stat-title text-md'>Location</div>
-                    <div className='text-lg stat-value'>{location}</div>
-                  </div>
-                )}
-
-                {blog && (
-                  <div className='stat'>
-                    <div className='stat-title text-md'>Website</div>
-                    <div className='text-lg stat-value'>
-                      <a
-                        href={
-                          blog.startsWith('http') ? blog : `https://${blog}`
-                        }
-                        target='_blank'
-                        rel='noreferrer'
-                      >
-                        {blog}
-                      </a>
-                    </div>
-                  </div>
-                )}
-
-                {twitter_username && (
-                  <div className='stat'>
-                    <div className='stat-title text-md'>Twitter</div>
-                    <div className='text-lg stat-value'>
-                      <a
-                        href={`https://twitter.com/${twitter_username}`}
-                        target='_blank'
-                        rel='noreferrer'
-                      >
-                        {blog}
-                      </a>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
           </div>
         </div>
-        {/* Github Stats */}
-        <div className='w-full py-5 mb-6 rounded-lg shadow-md bg-base-100 stats'>
-          <div className='grid grid-cols-1 xl:grid-cols-4 lg:grid-cols-2 '>
-            {/* Followers */}
-            <div className='stat'>
-              <div className='stat-figure text-secondary'>
-                <FaUsers className='text-3xl md:text-5xl' />
-              </div>
-              <div className='stat-title pr-5'>Followers</div>
-              <div className='stat-value pr-5 text-3xl md:text-4xl'>
-                {followers}
-              </div>
-            </div>
-
-            {/* Following */}
-            <div className='stat'>
-              <div className='stat-figure text-secondary'>
-                <FaUserFriends className='text-3xl md:text-5xl' />
-              </div>
-              <div className='stat-title pr-5'>Following</div>
-              <div className='stat-value pr-5 text-3xl md:text-4xl'>
-                {following}
-              </div>
-            </div>
-            {/* Public Repos */}
-            <div className='stat'>
-              <div className='stat-figure text-secondary'>
-                <FaCodepen className='text-3xl md:text-5xl' />
-              </div>
-              <div className='stat-title pr-5'>Public Repos</div>
-              <div className='stat-value pr-5 text-3xl md:text-4xl'>
-                {public_repos}
-              </div>
-            </div>
-            {/* Public Gists */}
-            <div className='stat'>
-              <div className='stat-figure text-secondary'>
-                <FaStore className='text-3xl md:text-5xl' />
-              </div>
-              <div className='stat-title pr-5'>Public Gists</div>
-              <div className='stat-value pr-5 text-3xl md:text-4xl'>
-                {public_gists}
-              </div>
-            </div>
-          </div>
+        <div className='grid grid-cols-2 lg:grid-cols-1 gap-4 mb-6'>
+          <StatsProfile user={user} />
+          <StatsGithub user={user} />
         </div>
         <RepoList repos={repos} />
       </div>

@@ -4,28 +4,55 @@ import AlertContext from '../../context/alert/AlertContext';
 const Alert = () => {
   const { alert } = useContext(AlertContext);
 
-  return (
-    alert !== null && (
-      <div className='flex items-start mb-4 space-x-2'>
-        {alert.type === 'error' && (
-          <svg
-            className='w-6 h-6 flex-none mt-0.5'
-            fill='none'
-            viewBox='0 0 24 24'
-          >
-            <circle cx='12' cy='12' r='12' fill='#FECDD3'></circle>
-            <path
-              d='M8 8l8 8M16 8l-8 8'
-              stroke='#B91C1C'
-              strokeWidth='2'
-            ></path>
-          </svg>
-        )}
-        <p className='flex-1 text-base font-semibold leading-7 text-white'>
-          <strong>{alert.msg}</strong>
-        </p>
+  const errorAlert = (
+    <div className='alert alert-error shadow-lg'>
+      <div>
+        <svg
+          xmlns='http://www.w3.org/2000/svg'
+          className='stroke-current flex-shrink-0 h-6 w-6'
+          fill='none'
+          viewBox='0 0 24 24'
+        >
+          <path
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            strokeWidth='2'
+            d='M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z'
+          />
+        </svg>
+        <span>{alert?.msg}</span>
       </div>
-    )
+    </div>
+  );
+
+  const successAlert = (
+    <div className='alert alert-success shadow-lg'>
+      <div>
+        <svg
+          xmlns='http://www.w3.org/2000/svg'
+          className='stroke-current flex-shrink-0 h-6 w-6'
+          fill='none'
+          viewBox='0 0 24 24'
+        >
+          <path
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            strokeWidth='2'
+            d='M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'
+          />
+        </svg>
+        <span>{alert?.msg}</span>
+      </div>
+    </div>
+  );
+
+  return (
+    <div
+      className='grid grid-cols-1 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 gap-8 mb-4'
+      style={{ visibility: alert ? 'visible' : 'hidden' }}
+    >
+      {alert?.type === 'success' ? successAlert : errorAlert}
+    </div>
   );
 };
 
