@@ -42,55 +42,10 @@ const StatsProfile = ({ user }) => {
       )}
     </div>
   );
-
-  // return (
-  //   <>
-  //     <div className='w-full rounded-lg shadow-md bg-base-100 stats'>
-  //       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3'>
-  //         {location && (
-  //           <div className='stat'>
-  //             <div className='stat-title text-md'>Location</div>
-  //             <div className='text-lg stat-value'>{location}</div>
-  //           </div>
-  //         )}
-
-  //         {blog && (
-  //           <div className='stat'>
-  //             <div className='stat-title text-md'>Website</div>
-  //             <div className='text-lg stat-value'>
-  //               <a
-  //                 href={blog.startsWith('http') ? blog : `https://${blog}`}
-  //                 target='_blank'
-  //                 rel='noreferrer'
-  //               >
-  //                 {blog}
-  //               </a>
-  //             </div>
-  //           </div>
-  //         )}
-
-  //         {twitter_username && (
-  //           <div className='stat'>
-  //             <div className='stat-title text-md'>Twitter</div>
-  //             <div className='text-lg stat-value'>
-  //               <a
-  //                 href={`https://twitter.com/${twitter_username}`}
-  //                 target='_blank'
-  //                 rel='noreferrer'
-  //               >
-  //                 {blog}
-  //               </a>
-  //             </div>
-  //           </div>
-  //         )}
-  //       </div>
-  //     </div>
-  //   </>
-  // );
 };
 
 StatsProfile.propTypes = {
-  user: PropTypes.object,
+  user: PropTypes.object.isRequired,
 };
 
 export default StatsProfile;
