@@ -9,7 +9,7 @@ import StatsGithub from '../components/stats/StatsGithub';
 import StatsProfile from '../components/stats/StatsProfile';
 
 const User = () => {
-  const { dispatch, user, loading, repos } = useContext(GithubContext);
+  const { dispatch, user, repos } = useContext(GithubContext);
 
   const params = useParams();
 
@@ -22,11 +22,11 @@ const User = () => {
     getUserData();
   }, [dispatch, params.login]);
 
-  const { name, type, avatar_url, bio, login, html_url, hireable } = user;
-
-  if (loading) {
+  if (!user) {
     return <Spinner />;
   }
+
+  const { name, type, avatar_url, bio, login, html_url, hireable } = user;
 
   return (
     <>
