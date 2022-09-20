@@ -1,7 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { IUser } from '../../context/github/GithubTypes';
 
-const StatsProfile = ({ user }) => {
+const StatsProfile = ({ user }: { user: IUser }) => {
   const { location, blog, twitter_username } = user;
 
   return (
@@ -42,10 +41,6 @@ const StatsProfile = ({ user }) => {
       )}
     </div>
   );
-};
-
-StatsProfile.propTypes = {
-  user: PropTypes.object.isRequired,
 };
 
 export default StatsProfile;

@@ -1,8 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import { FaEye, FaInfo, FaLink, FaStar, FaUtensils } from 'react-icons/fa';
+import { IRepo } from '../../context/github/GithubTypes';
 
-const RepoItem = ({ repo }) => {
+const RepoItem = ({ repo }: { repo: IRepo }) => {
   const {
     name,
     description,
@@ -38,10 +37,6 @@ const RepoItem = ({ repo }) => {
       </div>
     </div>
   );
-};
-
-RepoItem.propTypes = {
-  repo: PropTypes.object.isRequired,
 };
 
 export default RepoItem;

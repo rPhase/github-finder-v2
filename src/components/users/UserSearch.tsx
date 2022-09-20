@@ -2,30 +2,31 @@ import React, { useContext, useState } from 'react';
 import AlertContext from '../../context/alert/AlertContext';
 import GithubContext from '../../context/github/GithubContext';
 import { searchUsers } from '../../context/github/GithubActions';
+import { GHActionTypes } from '../../context/github/GithubReducer';
 
 const UserSearch = () => {
   const [text, setText] = useState('');
   const { users, dispatch } = useContext(GithubContext);
   const { setAlert } = useContext(AlertContext);
 
-  const onChangeHandler = (e) => {
+  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setText(e.target.value);
   };
 
-  const onSubmitHandler = async (e) => {
+  const onSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (text.trim() === '') {
       setAlert('Please enter something', 'error');
       return;
     }
-    dispatch({ type: 'SET_LOADING' });
+    dispatch({ type: GHActionTypes.SET_LOADING });
     const users = await searchUsers(text);
-    dispatch({ type: 'SEARCH_USERS', payload: users });
+    dispatch({ type: GHActionTypes.SEARCH_USERS, payload: users });
     setText('');
   };
 
   const clearUsersHandler = () => {
-    dispatch({ type: 'CLEAR_USERS' });
+    dispatch({ type: GHActionTypes.CLEAR_USERS });
     setAlert('Cleared Users.', 'success');
   };
 

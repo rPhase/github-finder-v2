@@ -7,26 +7,27 @@ import RepoList from '../components/repos/RepoList';
 import { getUserAndRepos } from '../context/github/GithubActions';
 import StatsGithub from '../components/stats/StatsGithub';
 import StatsProfile from '../components/stats/StatsProfile';
+import { GHActionTypes } from '../context/github/GithubReducer';
 
 const User = () => {
-  const { dispatch, user, loading, repos } = useContext(GithubContext);
+  const { dispatch, user, repos } = useContext(GithubContext);
 
   const params = useParams();
 
   useEffect(() => {
-    dispatch({ type: 'SET_LOADING' });
+    dispatch({ type: GHActionTypes.SET_LOADING });
     const getUserData = async () => {
-      const userData = await getUserAndRepos(params.login);
-      dispatch({ type: 'GET_USER_AND_REPOS', payload: userData });
+      const userData = await getUserAndRepos(params.login!);
+      dispatch({ type: GHActionTypes.GET_USER_AND_REPOS, payload: userData });
     };
     getUserData();
   }, [dispatch, params.login]);
 
-  const { name, type, avatar_url, bio, login, html_url, hireable } = user;
-
-  if (loading) {
+  if (!user) {
     return <Spinner />;
   }
+
+  const { name, type, avatar_url, bio, login, html_url, hireable } = user;
 
   return (
     <>
