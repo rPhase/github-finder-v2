@@ -7,6 +7,7 @@ import RepoList from '../components/repos/RepoList';
 import { getUserAndRepos } from '../context/github/GithubActions';
 import StatsGithub from '../components/stats/StatsGithub';
 import StatsProfile from '../components/stats/StatsProfile';
+import { GHActionTypes } from '../context/github/GithubReducer';
 
 const User = () => {
   const { dispatch, user, repos } = useContext(GithubContext);
@@ -14,10 +15,10 @@ const User = () => {
   const params = useParams();
 
   useEffect(() => {
-    dispatch({ type: 'SET_LOADING' });
+    dispatch({ type: GHActionTypes.SET_LOADING });
     const getUserData = async () => {
-      const userData = await getUserAndRepos(params.login);
-      dispatch({ type: 'GET_USER_AND_REPOS', payload: userData });
+      const userData = await getUserAndRepos(params.login!);
+      dispatch({ type: GHActionTypes.GET_USER_AND_REPOS, payload: userData });
     };
     getUserData();
   }, [dispatch, params.login]);

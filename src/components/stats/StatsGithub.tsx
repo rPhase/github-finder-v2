@@ -1,8 +1,7 @@
-import React from 'react';
 import { FaCodepen, FaStore, FaUserFriends, FaUsers } from 'react-icons/fa';
-import PropTypes from 'prop-types';
+import { IUser } from '../../context/github/GithubTypes';
 
-const Stats = ({ user }) => {
+const Stats = ({ user }: { user: IUser }) => {
   const { followers, following, public_repos, public_gists } = user;
   return (
     <>
@@ -41,10 +40,6 @@ const Stats = ({ user }) => {
       </div>
     </>
   );
-};
-
-Stats.propTypes = {
-  user: PropTypes.object.isRequired,
 };
 
 export default Stats;

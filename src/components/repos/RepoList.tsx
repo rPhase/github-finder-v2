@@ -1,8 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import { IRepo } from '../../context/github/GithubTypes';
 import RepoItem from './RepoItem';
 
-const RepoList = ({ repos }) => {
+const RepoList = ({ repos }: { repos: IRepo[] }) => {
   return (
     <div className='rounded-lg shadow-lg card bg-base-200'>
       <div className='card-body'>
@@ -15,10 +14,6 @@ const RepoList = ({ repos }) => {
       </div>
     </div>
   );
-};
-
-RepoList.propTypes = {
-  repos: PropTypes.array.isRequired,
 };
 
 export default RepoList;
