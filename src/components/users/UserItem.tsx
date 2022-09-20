@@ -1,8 +1,7 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { IUserItem } from '../../context/github/GithubTypes';
 
-const UserItem = ({ user: { login, avatar_url } }) => {
+const UserItem = ({ user: { login, avatar_url } }: { user: IUserItem }) => {
   return (
     <div className='card shadow-md compact side bg-base-200'>
       <div className='flex-row items-center space-x-4 card-body'>
@@ -23,10 +22,6 @@ const UserItem = ({ user: { login, avatar_url } }) => {
       </div>
     </div>
   );
-};
-
-UserItem.propTypes = {
-  user: PropTypes.object.isRequired,
 };
 
 export default UserItem;
